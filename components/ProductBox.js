@@ -49,7 +49,7 @@ const PriceRow = styled.div`
 
 const Price = styled.div`
   font-size: 1rem;
-  font-weight:400;
+  font-weight:600;
   text-align: right;
   @media screen and (min-width: 768px) {
     font-size: 1.2rem;
@@ -65,7 +65,7 @@ export default function ProductBox({_id,title,description,price,images}){
         <ProductWrapper>
             <WhiteBox href={url}>
                 <div>
-                    <img src={images[0]}/>
+                    <img src={images?.[0]}/>
                 </div>
             </WhiteBox>
             <ProductInfoBox>
@@ -74,7 +74,9 @@ export default function ProductBox({_id,title,description,price,images}){
                     <Price>
                         ${price}
                     </Price>
-                    <Button onClick={()=>addProduct(_id)} primary={1} outline={1}>Add to Cart</Button>
+                    <Button block    onClick={()=>addProduct(_id)} primary={1} outline={1}>
+                      Add to Cart
+                    </Button>
 
                 </PriceRow>
             </ProductInfoBox>

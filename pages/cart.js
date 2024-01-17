@@ -24,21 +24,35 @@ const ProductInfoCell = styled.td`
 `;
 
 const QuantityLabel = styled.span`
-    padding: 0 3px;
+    padding: 0 15px;
+    display: block;
+    @media screen and (min-width: 768px) {
+        display: inline-block;
+        padding: 0 15px;
+    }
 `;
 
 const ProductImageBox = styled.div`
-    width: 100px;
+    width: 70px;
     height: 100px;
-    padding: 10px;
+    padding: 2px;
     border-radius: 10px;
     border: 1px solid rgba(0,0,0,0.1);
     display: flex;
     align-items: center;
     justify-content: center;
     img{
+    max-width: 60px;
+    max-height: 60px;
+  }
+  @media screen and(min-width: 768px) {
+    padding: 10px;
+    img{
     max-width: 80px;
     max-height: 80px;
+    }
+    width: 100px;
+    height: 100px;
   }
 `;
 
@@ -54,7 +68,7 @@ const Box = styled.div`
 `;
 
 export default function CartPage() {
-    const {cartProducts,addProduct,removeProduct} = useContext(CartContext);
+    const {cartProducts,addProduct,removeProduct,clearCart} = useContext(CartContext);
     const [products,setProducts] = useState([]);
     const [name,setName] = useState('');
     const [email,setEmail] = useState('');
@@ -74,7 +88,16 @@ export default function CartPage() {
         else{
             setProducts([])
         }
-    },[cartProducts])
+    },[cartProducts]);
+    useEffect(()=>{
+        if(typeof window === 'undefined'){
+            return;
+        }
+        if (window.location.href.includes('success')) {
+            setIsSuccess(true);
+            clearCart();
+        }
+    },[])
     function increaseProduct(id){
         addProduct(id);
     }
